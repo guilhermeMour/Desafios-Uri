@@ -146,3 +146,120 @@ class Treinador {
         return nivel;
     }
 }
+
+//prova do gilson de lista
+public class LinkedList {
+    class Node {
+        Object element = null;
+        Node next;
+        Node previous;
+    }
+    Node head = null;
+    Node tail = null;
+    int count = 0;
+
+    public void add(Object element) {
+        Node newNode = new Node();
+        newNode.element = element;
+
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.previous = tail;
+            tail = newNode;
+        }
+        count++;
+    }
+
+    public void add(Object element, int index) {
+        Node newNode = new Node();
+        newNode.element = element;
+
+        if (index == 0) {
+            newNode.next = head;
+            head = newNode;
+        } else if (index == count) {
+            tail.next = newNode;
+            tail = newNode;
+        } else {
+            Node aux = head;
+
+            for (int i = 0; i < index - 1; i++) {
+                aux = aux.next;
+            }
+            newNode.next = aux.next;
+            aux.next = newNode;
+        }
+    }
+
+    public void remove(Object element) {
+        Node aux = head;
+
+        for (int i = 0; i < count; i++) {
+            if(aux.element.equals(element)) {
+                if (i == 0) {
+                    head = null;
+                    count--;
+
+                    break;
+                } else if(i == count-1) {
+                    aux.previous = tail.previous;
+
+                    tail = aux;
+                    aux.next = null;
+                    count--;
+
+                    break;
+                } else {
+                    aux.previous.next = aux.next;
+                }
+                aux = aux.next;
+            }
+        }
+    }
+
+    public int size() {
+        return count;
+    }
+
+    public Node get(int index) {
+        int aux = 0;
+        Node auxElement = head;
+
+        for (int i = 0; i < count; i++) {
+            if(aux == index) {
+                return auxElement;
+            }
+            auxElement = auxElement.next;
+            aux++;
+        }
+
+        return null;
+    }
+
+    public int indexOf(Object element) {
+        Node aux = head;
+        int index = 0;
+
+        while(aux != null) {
+            if (aux.element == element) {
+                return index;
+            }
+            index++;
+            aux = aux.next;
+        }
+        return -1;
+    }
+
+    public boolean contains(Object element) {
+        return indexOf(element) != -1;
+    }
+
+    public void clear() {
+        head = null;
+        tail = null;
+        count = 0;
+    }
+}
